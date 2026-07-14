@@ -13,3 +13,4 @@ env/
 # Editor/IDE cruft
 .vscode/
  
+test_test.py

@@ -22,8 +22,6 @@
 
 ## 資料清洗
 
-爬下來的原始新聞卡片與內文並不是乾淨的資料，以下是實際有做清洗的步驟：
-
 - **廣告過濾**：`scraper.py` 的 `scrape()` 會跳過帶有 `stream-taboola-ad`
   class 的列表項目，避免把廣告卡片當成新聞抓進來。
 - **去重**：`scrape()` 用 `news_link`（新聞網址）當 key 存進字典，同一則新聞
@@ -35,8 +33,6 @@
 - **內文雜訊過濾**：`scraper.py` 的 `get_article_content()` 抓取內文段落時，
   會跳過帶有 `read-more-vendor` class 的段落——這是 Yahoo 模板裡「更多OOO報導」
   這類與本文無關的延伸閱讀區塊。
-- **抓取失敗的防呆**：若內文抓取失敗或內容過短（<10 字），`main.py` 會改用
-  新聞標題作為 LLM 的輸入，避免把錯誤訊息字串送進 Gemini。
 - **LLM 回傳格式清洗**：`llm_analyzer.py` 會去除 Gemini 回傳內容中可能夾帶的
   ` ```json ` Markdown 標記，並把「無提及實體」統一正規化成 `Null`，確保
   CSV 欄位格式一致。
@@ -45,11 +41,10 @@
 
 ```bash
 python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
 
-cp .env.example .env
-# 編輯 .env，填入你的 GOOGLE_API_KEY
+cp .env.example .env # 編輯 .env，填入你的 GOOGLE_API_KEY
 
 python main.py
 ```
@@ -89,14 +84,9 @@ ChromeDriver，因此不需要在 Dockerfile 裡手動釘選 driver 版本。
 
 ## 已知注意事項
 
-- **12 小時時間過濾**：`parser.py` 的 `parse_time_to_hours()` 會把 Yahoo 的相對
-  時間字串（如「10 分鐘前」「6 小時前」「昨天」）換算成小時數，超過 12 小時
-  的新聞會被直接過濾掉。
 - **Gemini 模型**：目前使用 `gemini-3.1-flash-lite`（GA 版本）。若之後遇到模型
   404 或額度問題，可以到 Google AI Studio 確認你的 API key 實際可用的模型清單，
   再回頭調整 `llm_analyzer.py` 裡的模型名稱。
 - **抓取筆數**：`scraper.py` 裡 `scrape()` 的 `max_results` 參數預設為 60 筆。
   若想抓取更多或更少新聞，請自行調整 `main.py` 呼叫
   `scraper.scrape(max_results=...)` 時傳入的數值。
-- **GOOGLE_API_KEY 不會打包進映像**：`.dockerignore` 已排除 `.env`，金鑰一律
-  用 `--env-file` 或 `-e` 在執行期傳入。
