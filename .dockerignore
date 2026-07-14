@@ -1,0 +1,18 @@
+# Never send secrets into the build context
+.env
+
+# Virtual envs / caches — installed fresh inside the image instead
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Git metadata
+.git/
+.gitignore
+
+# Editor cruft
+.vscode/
+
+# Local run output — regenerated at container runtime, no need to bake in
+yahoo_news_results.csv

@@ -1,0 +1,15 @@
+# Byte-compiled Python
+__pycache__/
+*.py[cod]
+ 
+# Virtual environments — reviewers install from requirements.txt instead
+.venv/
+venv/
+env/
+ 
+# Secrets — never commit the real key, only .env.example
+.env
+ 
+# Editor/IDE cruft
+.vscode/
+ 
