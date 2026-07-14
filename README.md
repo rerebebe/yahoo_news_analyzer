@@ -30,12 +30,6 @@
   （例如「中時新聞網・6小時前」），只取「中時新聞網」，去除時間後綴。
 - **12 小時時間過濾**：`parse_time_to_hours()` 把「10 分鐘前」「6 小時前」
   「昨天」等相對時間字串換算成小時數，超過 12 小時的新聞直接捨棄。
-- **內文雜訊過濾**：`scraper.py` 的 `get_article_content()` 抓取內文段落時，
-  會跳過帶有 `read-more-vendor` class 的段落——這是 Yahoo 模板裡「更多OOO報導」
-  這類與本文無關的延伸閱讀區塊。
-- **LLM 回傳格式清洗**：`llm_analyzer.py` 會去除 Gemini 回傳內容中可能夾帶的
-  ` ```json ` Markdown 標記，並把「無提及實體」統一正規化成 `Null`，確保
-  CSV 欄位格式一致。
 
 ## 本機執行
 
@@ -44,7 +38,7 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-cp .env.example .env # 編輯 .env，填入你的 GOOGLE_API_KEY
+cp .env.example .env
 
 python main.py
 ```
