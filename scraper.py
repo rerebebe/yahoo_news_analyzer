@@ -182,5 +182,5 @@ class YahooNewsScraper:
             return full_text if full_text else "無法讀取內文結構"
 
         except Exception as e:
-            print(f"讀取內文失敗 ({url}): {str(e)}")
+            print(f"=== 讀取內文失敗 ({url}): {str(e)} ===")
             return "讀取內文發生錯誤"
