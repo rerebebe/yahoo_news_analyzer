@@ -85,7 +85,7 @@ ChromeDriver，因此不需要在 Dockerfile 裡手動釘選 driver 版本。
 ## 已知注意事項
 
 - **Gemini 模型**：目前使用 `gemini-3.1-flash-lite`（GA 版本）。若之後遇到模型
-  404 或額度問題，可以到 Google AI Studio 確認你的 API key 實際可用的模型清單，
+  404 或額度問題，可以到 test_test.py 確認你的 API key 實際可用的模型清單，
   再回頭調整 `llm_analyzer.py` 裡的模型名稱。
 - **抓取筆數**：`scraper.py` 裡 `scrape()` 的 `max_results` 參數預設為 60 筆。
   若想抓取更多或更少新聞，請自行調整 `main.py` 呼叫
